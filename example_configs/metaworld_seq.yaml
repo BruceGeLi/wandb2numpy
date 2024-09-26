@@ -5,12 +5,12 @@ experiment1:
   fields: ["evaluation_success_mean", "num_global_steps", "evaluation_episode_reward_mean"]
   entity: gelikit
 #  project: metaworld_bbrl_entire
-  project: metaworld_tcp_entire
+  project: metaworld_seq_entire
 
   config:
     sampler.args.env_id:
-          values: ["AssemblyProDMPTCP-v2"]
+          values: ["metaworld_ProDMP_TCE/assembly-v2"]
 
-#  TCP
-  groups: ["50 env, 20 seeds, entropy_eq false, lr 3e-4, lr scheduler + gae"]
-  output_path: /home/lige/Codes/wandb2numpy/wandb_data/metaworld_tcp_prodmp
+#  SEQ
+  groups: ["Meta 50envs, REMOVE VEL, 8seeds, policy128"]
+  output_path: /home/lige/Codes/seq_rl/wandb2numpy/wandb_data/  # I have to use part of the env id as the "/" will be used as a directory separator

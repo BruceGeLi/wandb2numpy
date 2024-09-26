@@ -38,69 +38,69 @@ def read_meta_world_data(data_path):
             simulation_steps_path = subdict + "/num_global_steps.npy"
             simulation_steps = np.load(simulation_steps_path)
             global_steps_list.append(simulation_steps)
-
-    # The cluster randomly kill some runs
-    b = np.zeros((20, 304))
-    a = is_success_list[9]
-    b[:19] = a
-    b[-1] = a[0]
-    is_success_list[9] = b
-
-    b = np.zeros((20, 304))
-    a = is_success_list[11]
-    b[:19] = a
-    b[-1] = a[0]
-    is_success_list[11] = b
-
-    b = np.zeros((20, 304))
-    a = is_success_list[10][:, :304]
-    b[:19] = a
-    b[-1] = a[0]
-    is_success_list[10] = b
-
+    #
+    # # The cluster randomly kill some runs
+    # b = np.zeros((20, 304))
+    # a = is_success_list[9]
+    # b[:19] = a
+    # b[-1] = a[0]
+    # is_success_list[9] = b
+    #
+    # b = np.zeros((20, 304))
+    # a = is_success_list[11]
+    # b[:19] = a
+    # b[-1] = a[0]
+    # is_success_list[11] = b
+    #
+    # b = np.zeros((20, 304))
+    # a = is_success_list[10][:, :304]
+    # b[:19] = a
+    # b[-1] = a[0]
+    # is_success_list[10] = b
+    #
     is_success_array = np.array(is_success_list)
     is_success_array = np.swapaxes(is_success_array, 0, 1)
-
-    # The cluster randomly kill some runs
-    b = np.zeros((20, 304))
-    a = ep_reward_list[9]
-    b[:19] = a
-    b[-1] = a[0]
-    ep_reward_list[9] = b
-
-    b = np.zeros((20, 304))
-    a = ep_reward_list[11]
-    b[:19] = a
-    b[-1] = a[0]
-    ep_reward_list[11] = b
-
-    b = np.zeros((20, 304))
-    a = ep_reward_list[10][:, :304]
-    b[:19] = a
-    b[-1] = a[0]
-    ep_reward_list[10] = b
-
+    #
+    # # The cluster randomly kill some runs
+    # b = np.zeros((20, 304))
+    # a = ep_reward_list[9]
+    # b[:19] = a
+    # b[-1] = a[0]
+    # ep_reward_list[9] = b
+    #
+    # b = np.zeros((20, 304))
+    # a = ep_reward_list[11]
+    # b[:19] = a
+    # b[-1] = a[0]
+    # ep_reward_list[11] = b
+    #
+    # b = np.zeros((20, 304))
+    # a = ep_reward_list[10][:, :304]
+    # b[:19] = a
+    # b[-1] = a[0]
+    # ep_reward_list[10] = b
+    #
     ep_reward_array = np.array(ep_reward_list)
     ep_reward_array = np.swapaxes(ep_reward_array, 0, 1)
-
-    # The cluster randomly kill some runs
-    b = np.zeros((20, 304))
-    a = global_steps_list[9]
-    b[:19] = a
-    b[-1] = a[0]
-    global_steps_list[9] = b
-
-    b = np.zeros((20, 304))
-    a = global_steps_list[11]
-    b[:19] = a
-    b[-1] = a[0]
-    global_steps_list[11] = b
-
-    b = np.zeros((20, 304))
-    a = global_steps_list[10][:, :304]
-    b[:19] = a
-    b[-1] = a[0]
-    global_steps_list[10] = b
+    #
+    # # The cluster randomly kill some runs
+    # b = np.zeros((20, 304))
+    # a = global_steps_list[9]
+    # b[:19] = a
+    # b[-1] = a[0]
+    # global_steps_list[9] = b
+    #
+    # b = np.zeros((20, 304))
+    # a = global_steps_list[11]
+    # b[:19] = a
+    # b[-1] = a[0]
+    # global_steps_list[11] = b
+    #
+    # b = np.zeros((20, 304))
+    # a = global_steps_list[10][:, :304]
+    # b[:19] = a
+    # b[-1] = a[0]
+    # global_steps_list[10] = b
 
     simulation_steps_array = np.array(global_steps_list)
     simulation_steps_array = np.swapaxes(simulation_steps_array, 0, 1)
@@ -150,7 +150,7 @@ def draw_metaworld_iqm(is_success, simulation_steps, algorithm):
     # plt.show()
     tikzplotlib.get_tikz_code(figure=fig)
     # tikzplotlib.save("metaworld_bbrl_iqm.tex")
-    tikzplotlib.save("metaworld_tcp_iqm.tex")
+    tikzplotlib.save("metaworld_seq_iqm.tex")
 
 
 def draw_ep_reward_iqm(ep_reward, simulation_steps, algorithm):
@@ -176,13 +176,13 @@ def draw_ep_reward_iqm(ep_reward, simulation_steps, algorithm):
     # plt.show()
     tikzplotlib.get_tikz_code(figure=fig)
     # tikzplotlib.save("metaworld_bbrl_ep_reward_iqm.tex")
-    tikzplotlib.save("metaworld_tcp_ep_reward_iqm.tex")
+    tikzplotlib.save("metaworld_seq_ep_reward_iqm.tex")
 
 
 if __name__ == "__main__":
     # is_success, ep_reward, simulation_steps = read_meta_world_data(
     #     "/home/lige/Codes/wandb2numpy/wandb_data/metaworld_tcp_prodmp")
-    is_success, ep_reward, simulation_steps = read_meta_world_data("/home/lige/Codes/wandb2numpy/wandb_data/metaworld_bbrl_prodmp")
+    is_success, ep_reward, simulation_steps = read_meta_world_data("/home/lige/Codes/seq_rl/wandb2numpy/wandb_data/metaworld_ProDMP_TCE")
     #
     # draw the performance profile
     draw_peformance_profile(is_success)
