@@ -8,8 +8,8 @@ if __name__=="__main__":
     # method = "bbrl"
     # method = "tcp"
     method = "seq"
-    # case = "dense"
-    case = "sparse"
+    case = "dense"
+    # case = "sparse"
 
     default_config = f"/home/lige/Codes/seq_rl/wandb2numpy/example_configs/box_{case}_{method}.yaml"
 

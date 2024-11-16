@@ -22,6 +22,7 @@ experiment1:
 #  groups: ["sparse, ablation, segments 25"] # 25 Segments
 #  groups: ["sparse, ablation, dropout 0.05"] # Dropout
 #  groups: [ "sparse, ablation, no LayerNorm" ] # NO LAYERNORM
-  groups: ["sparse, ablation, no TRPL"] # fixme, no TRPL
+#  groups: ["sparse, ablation, no TRPL"] # NO TRPL
+  groups: ["sparse, ablation, no init cond q-target"] # NO INIT
 
   output_path: /home/lige/Codes/seq_rl/wandb2numpy/wandb_data/box_sparse_seq
