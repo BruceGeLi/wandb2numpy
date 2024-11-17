@@ -13,63 +13,68 @@ plt.rc('font', family='serif')
 
 from matplotlib.ticker import MaxNLocator
 
+
+
+
 env_id = [
-    "Assembly",
-    "PickOutOfHole",
-    "PlateSlide",
-    "PlateSlideBack",
-    "PlateSlideSide",
-    "PlateSlideBackSide",
-    "BinPicking",
-    "Hammer",
-    "SweepInto",
-    "BoxClose",
-    "ButtonPress",
-    "ButtonPressWall",
-    "ButtonPressTopdown",
-    "ButtonPressTopdownWall",
-    "CoffeeButton",
-    "CoffeePull",
-    "CoffeePush",
-    "DialTurn",
-    "Disassemble",
-    "DoorClose",
-    "DoorLock",
-    "DoorOpen",
-    "DoorUnlock",
-    "HandInsert",
-    "DrawerClose",
-    "DrawerOpen",
-    "FaucetOpen",
-    "FaucetClose",
-    "HandlePressSide",
-    "HandlePress",
-    "HandlePullSide",
-    "HandlePull",
-    "LeverPull",
-    "PegInsertSide",
-    "PickPlaceWall",
-    "Reach",
-    "PushBack",
-    "Push",
-    "PickPlace",
-    "PegUnplugSide",
-    "Soccer",
-    "StickPush",
-    "StickPull",
-    "PushWall",
-    "ReachWall",
-    "ShelfPlace",
-    "Sweep",
-    "WindowOpen",
-    "WindowClose",
+    # "PickOutOfHole",
+    # "PlateSlide",
+    # "PlateSlideBack",
+    # "PlateSlideSide",
+    # "PlateSlideBackSide",
+    # "BinPicking",
+    # "Hammer",
+    # "SweepInto",
+    # "BoxClose",
+    # "ButtonPress",
+    # "Assembly",
+    # "ButtonPressWall",
+    # "ButtonPressTopdown",
+    # "ButtonPressTopdownWall",
+    # "CoffeeButton",
+    # "CoffeePull",
+    # "CoffeePush",
+    # "DialTurn",
+    # "Disassemble",
+    # "DoorClose",
+    # "DoorLock",
+    # "DoorOpen",
+    # "DoorUnlock",
+    # "HandInsert",
+    # "DrawerClose",
+    # "DrawerOpen",
+    # "FaucetOpen",
+    # "FaucetClose",
+    # "HandlePressSide",
+    # "HandlePress",
+    # "HandlePullSide",
+    # "HandlePull",
+    # "LeverPull",
+    # "PegInsertSide",
+    # "PickPlaceWall",
+    # "Reach",
+    # "PushBack",
+    # "Push",
+    # "PickPlace",
+    # "PegUnplugSide",
+    # "Soccer",
+    # "StickPush",
+    # "StickPull",
+    # "PushWall",
+    # "ReachWall",
+    # "ShelfPlace",
+    # "Sweep",
+    # "WindowOpen",
+    # "WindowClose",
     "Basketball",
 ]
 
-COLOR_TCP = "1f77b4"  # % Blue, TCP
+COLOR_TOP = "1f77b4"  # % Blue, TOP-ERL
+COLOR_TCP = "FFA500"  # % Orange, TCP
 COLOR_BBRL = "17becf"  # % Cyan, BBRL
 COLOR_PPO = "2ca02c"  # % Green, PPO
-COLOR_TRPL = "d62728"  # % Red, TRPL
+# COLOR_TRPL = "d62728"  # % Red, TRPL
+COLOR_GTRXL = "d62728"  # % Red, GTrXL
 COLOR_SAC = "9467bd"  # % Purple, SAC
 COLOR_gSDE = "8c564b"  # % Brown, gSDE
 COLOR_PINK = "e377c2"  # % Pink, PINK
@@ -257,6 +262,59 @@ def get_tcp_data(task_id):
 
 
 ########################################################################
+# TOP-ERL
+def convert_task_id_top(input_str):
+    return convert_task_id_gsde(input_str)
+
+
+def get_top_data(task_id):
+    task_id_top = convert_task_id_top(task_id)
+
+    success = np.load(
+        f"./metaworld_seq/{task_id_top}/experiment1/evaluation_success_mean.npy",
+        allow_pickle=True)
+    time_steps = np.load(
+        f"./metaworld_seq/{task_id_top}/experiment1/num_global_steps.npy",
+        allow_pickle=True)
+    # Turn Nan to 0
+    # if success.shape[1] > 304: # fixme check this?
+    #     success = success[..., :304]
+    #     time_steps = time_steps[..., :304]
+    # fix NaNs in DrawerClose
+    if task_id == "DrawerClose": # 4 seeds were broken and get Nan after success
+        success[np.isnan(success)] = 1
+        time_steps[:4] = time_steps[4:]
+
+    success[np.isnan(success)] = 1
+    time_steps[np.isnan(time_steps)] = 0
+    return time_steps, success
+
+
+########################################################################
+# GRTXL
+def convert_task_id_gtrxl(input_str):
+    return convert_task_id_gsde(input_str)
+
+
+def get_gtrxl_data(task_id):
+    task_id_gtr = convert_task_id_gtrxl(task_id)
+
+    success = np.load(
+        f"./metaworld_gtrxl_new/{task_id_gtr}/experiment1/success_mean.npy",
+        allow_pickle=True)
+    time_steps = np.load(
+        f"./metaworld_gtrxl_new/{task_id_gtr}/experiment1/num_env_steps_trained.npy",
+        allow_pickle=True)
+    # Turn Nan to 0
+    # if success.shape[1] > 304: # fixme check this?
+    #     success = success[..., :304]
+    #     time_steps = time_steps[..., :304]
+    success[np.isnan(success)] = 0
+    time_steps[np.isnan(time_steps)] = 0
+    return time_steps, success
+
+
+########################################################################
 # BBRL
 def convert_task_id_bbrl(input_str):
     return input_str + "ProDMP-v2"
@@ -292,9 +350,9 @@ def plot_main():
                      0.2, color=f'#{COLOR_PPO}')
 
         ###################  TRPL
-        trpl_time, trpl_data, trpl_ci_low, trpl_ci_high = get_trpl_data(task_id)
-        fill_between(trpl_time, trpl_data, trpl_ci_low, trpl_ci_high, plt.gca(),
-                     0.2, color=f'#{COLOR_TRPL}')
+        # trpl_time, trpl_data, trpl_ci_low, trpl_ci_high = get_trpl_data(task_id)
+        # fill_between(trpl_time, trpl_data, trpl_ci_low, trpl_ci_high, plt.gca(),
+        #              0.2, color=f'#{COLOR_TRPL}')
 
         ###################  SAC
         sac_time, sac_data, sac_ci_low, sac_ci_high = get_sac_data(task_id)
@@ -321,19 +379,32 @@ def plot_main():
         bbrl_times, bbrl_iqm, bbrl_ci_low, bbrl_ci_up = compute_iqm(bbrl_time,
                                                                     bbrl_data)
         fill_between(bbrl_times, bbrl_iqm, bbrl_ci_low, bbrl_ci_up, plt.gca(),
-                     0.2, color=f'#{COLOR_BBRL}')  # todo color
+                     0.2, color=f'#{COLOR_BBRL}')
 
         ####################  TCP
         tcp_times, tcp_data = get_tcp_data(task_id)  # [20, 100], 0-40M
         tcp_times, tcp_iqm, tcp_ci_low, tcp_ci_up = compute_iqm(tcp_times,
                                                                 tcp_data)
         fill_between(tcp_times, tcp_iqm, tcp_ci_low, tcp_ci_up, plt.gca(),
-                     0.2, color=f'#{COLOR_TCP}', linewidth=5)  # todo color
-        plt.xlim(0, 4e7)
-        plt.ylim(-0.05, 1.05)
+                     0.2, color=f'#{COLOR_TCP}')
+
+        ####################  GTrXL
+        gtr_times, gtr_data = get_gtrxl_data(task_id)  # [20, 100], 0-40M
+        gtr_times, gtr_iqm, gtr_ci_low, gtr_ci_up = compute_iqm(gtr_times,
+                                                                gtr_data)
+        fill_between(gtr_times, gtr_iqm, gtr_ci_low, gtr_ci_up, plt.gca(),
+                     0.2, color=f'#{COLOR_GTRXL}')
+
+        ####################  TOP-ERL
+        top_times, top_data = get_top_data(task_id)  # [20, 100], 0-40M
+        top_times, top_iqm, top_ci_low, top_ci_up = compute_iqm(top_times,
+                                                                top_data)
+        fill_between(top_times, top_iqm, top_ci_low, top_ci_up, plt.gca(),
+                     0.2, color=f'#{COLOR_TOP}', linewidth=5)
 
         ######################## Plot profile
-
+        plt.xlim(0, 2e7)
+        plt.ylim(-0.05, 1.05)
         plt.xlabel("Number of Env Interaction", fontsize=20)
         plt.ylabel("Success rate IQM", fontsize=20)
         plt.xticks(fontsize=20)
@@ -350,10 +421,10 @@ def plot_main():
         print("")
         plt.savefig(f"./plots_50/plot_{i}.pdf", dpi=300, bbox_inches="tight")
         plt.close(fig)
-
+        # exit(0)
 
 def compute_iqm(simulation_steps, is_success):
-    num_frame = 20
+    num_frame = 40
     frames = np.floor(np.linspace(1, is_success.shape[-1], num_frame)).astype(
         int) - 1
 
