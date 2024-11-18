@@ -17,55 +17,55 @@ from matplotlib.ticker import MaxNLocator
 
 
 env_id = [
-    # "PickOutOfHole",
-    # "PlateSlide",
-    # "PlateSlideBack",
-    # "PlateSlideSide",
-    # "PlateSlideBackSide",
-    # "BinPicking",
-    # "Hammer",
-    # "SweepInto",
-    # "BoxClose",
-    # "ButtonPress",
-    # "Assembly",
-    # "ButtonPressWall",
-    # "ButtonPressTopdown",
-    # "ButtonPressTopdownWall",
-    # "CoffeeButton",
-    # "CoffeePull",
-    # "CoffeePush",
-    # "DialTurn",
-    # "Disassemble",
-    # "DoorClose",
-    # "DoorLock",
-    # "DoorOpen",
-    # "DoorUnlock",
-    # "HandInsert",
-    # "DrawerClose",
-    # "DrawerOpen",
-    # "FaucetOpen",
-    # "FaucetClose",
-    # "HandlePressSide",
-    # "HandlePress",
-    # "HandlePullSide",
-    # "HandlePull",
-    # "LeverPull",
-    # "PegInsertSide",
-    # "PickPlaceWall",
-    # "Reach",
-    # "PushBack",
-    # "Push",
-    # "PickPlace",
-    # "PegUnplugSide",
-    # "Soccer",
-    # "StickPush",
-    # "StickPull",
-    # "PushWall",
-    # "ReachWall",
-    # "ShelfPlace",
-    # "Sweep",
-    # "WindowOpen",
-    # "WindowClose",
+    "PickOutOfHole",
+    "PlateSlide",
+    "PlateSlideBack",
+    "PlateSlideSide",
+    "PlateSlideBackSide",
+    "BinPicking",
+    "Hammer",
+    "SweepInto",
+    "BoxClose",
+    "ButtonPress",
+    "Assembly",
+    "ButtonPressWall",
+    "ButtonPressTopdown",
+    "ButtonPressTopdownWall",
+    "CoffeeButton",
+    "CoffeePull",
+    "CoffeePush",
+    "DialTurn",
+    "Disassemble",
+    "DoorClose",
+    "DoorLock",
+    "DoorOpen",
+    "DoorUnlock",
+    "HandInsert",
+    "DrawerClose",
+    "DrawerOpen",
+    "FaucetOpen",
+    "FaucetClose",
+    "HandlePressSide",
+    "HandlePress",
+    "HandlePullSide",
+    "HandlePull",
+    "LeverPull",
+    "PegInsertSide",
+    "PickPlaceWall",
+    "Reach",
+    "PushBack",
+    "Push",
+    "PickPlace",
+    "PegUnplugSide",
+    "Soccer",
+    "StickPush",
+    "StickPull",
+    "PushWall",
+    "ReachWall",
+    "ShelfPlace",
+    "Sweep",
+    "WindowOpen",
+    "WindowClose",
     "Basketball",
 ]
 
@@ -78,7 +78,7 @@ COLOR_GTRXL = "d62728"  # % Red, GTrXL
 COLOR_SAC = "9467bd"  # % Purple, SAC
 COLOR_gSDE = "8c564b"  # % Brown, gSDE
 COLOR_PINK = "e377c2"  # % Pink, PINK
-
+COLOR_BG = "#EBF0F0"  # LIGHT GREY, BACKGROUND
 
 # \definecolor{C7}{HTML}{7f7f7f}  % Gray,
 # \definecolor{C8}{HTML}{bcbd22}  % Yellow Green,
@@ -342,7 +342,7 @@ def plot_main():
     task_ids = env_id
     for i, task_id in enumerate(task_ids):
         print(task_id)
-        fig = plt.figure(figsize=(6, 4))
+        fig = plt.figure(figsize=(6, 4.5))
 
         ###################  PPO
         ppo_time, ppo_data, ppo_ci_low, ppo_ci_high = get_ppo_data(task_id)
@@ -414,7 +414,14 @@ def plot_main():
         # Reduce the number of x-axis ticks
         ax = plt.gca()
         ax.xaxis.set_major_locator(MaxNLocator(integer=True, nbins=4))
-        plt.grid(alpha=0.5)
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        ax.spines['left'].set_visible(False)
+        ax.spines['bottom'].set_visible(False)
+        # ax.axis('off')
+        # plt.grid(alpha=0.5)
+        plt.grid(alpha=0.5, color="white")
+        ax.set_facecolor(COLOR_BG)
 
         # plt.show()
 
