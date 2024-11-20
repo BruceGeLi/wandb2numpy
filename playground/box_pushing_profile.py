@@ -84,8 +84,8 @@ def draw_box_pushing_iqm(is_success, simulation_steps, algorithm, method, case):
 if __name__ == "__main__":
     # method = "bbrl"
     method = "seq"
-    case = "dense"
-    # case = "sparse"
+    # case = "dense"
+    case = "sparse"
 
     is_success, simulation_steps = read_box_dense_world_data(f"/home/lige/Codes/seq_rl/wandb2numpy/wandb_data/box_{case}_{method}")
 
