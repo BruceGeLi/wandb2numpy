@@ -8,3 +8,4 @@ wandb_data/
 /metaworld_50envs/meta_pink/
 /metaworld_50envs/metaworld_bbrl_prodmp/
 /metaworld_50envs/metaworld_tcp_prodmp/
+**.npy
