@@ -5,16 +5,19 @@ from wandb2numpy.save_experiment import create_output_dirs, save_matrix
 
 if __name__=="__main__":
 
-    # method = "bbrl"
-    # method = "tcp"
-    method = "seq"
-    # case = "dense"
-    case = "sparse"
+    task = "humanoid_stand"
+    # task = "humanoid_walk"
+    # task = "humanoid_run"
+    # task = "dog_stand"
+    # task = "dog_walk"
+    # task = "dog_trot"
+    # task = "dog_run"
 
-    default_config = f"/home/lige/Codes/seq_rl/wandb2numpy/example_configs/box_{case}_{method}.yaml"
-
+    default_config = f"/home/lige/Codes/onur/wandb2numpy/example_configs/dmc_tasks.yaml"
 
     list_doc = load_config(default_config)
+    list_doc['experiment1']['project'] = task
+    list_doc['experiment1']['output_path'] =f"/home/lige/Codes/onur/wandb2numpy/wandb_data/{task}"
     experiment_data_dict, config_list = export_data(list_doc)
     print(experiment_data_dict.keys())
     for i, experiment in enumerate(experiment_data_dict.keys()):

@@ -1,0 +1,22 @@
+# This is the minimal working config. Because not specified otherwise, all runs in the project
+# that include the field "test_acc" will be exported as a numpy array to the directory "wandb_data".
+
+experiment1:
+  fields: ["evaluation/return", "_step"]
+  entity: geli-bruce-ai
+
+  project: auto
+
+#  config:
+#    agent.args.segments_config.num_segments:
+#      values: [5]  # 25
+#    sampler.args.time_pairs_config.num_select:
+#      values: [2]
+##      values: [5]
+##      values: [10]
+##      values: [25]
+##      values: [50]
+#      values: [100]
+  groups: ["T15, alpha50, 10 SEEDS"]
+
+  output_path: auto
