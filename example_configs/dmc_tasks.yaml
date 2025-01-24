@@ -17,6 +17,14 @@ experiment1:
 ##      values: [25]
 ##      values: [50]
 #      values: [100]
-  groups: ["T15, alpha50, 10 SEEDS"]
+#  groups: ["T15, alpha50, 10 SEEDS"] # humanoid stand
+#  groups: ["T20, alpha100, 10seeds"] # humanoid walk
+#  groups: ["T15, alpha 200, 10SEEDS"] # humanoid run
+#  groups: ["T15, alpha50, critic width 1024, 10 seeds"] # dog stand
+#  groups: ["T10, alpha50, onur NN, 10seeds"] # dog walk
+#  groups: ["T10, alpha 250, critic_depth3, 10 seeds"] # dog trot
+  groups: ["T5, alpha 150, 10 seeds"] # dog run
+
+
 
   output_path: auto

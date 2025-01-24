@@ -5,13 +5,13 @@ from wandb2numpy.save_experiment import create_output_dirs, save_matrix
 
 if __name__=="__main__":
 
-    task = "humanoid_stand"
+    # task = "humanoid_stand"
     # task = "humanoid_walk"
     # task = "humanoid_run"
     # task = "dog_stand"
     # task = "dog_walk"
     # task = "dog_trot"
-    # task = "dog_run"
+    task = "dog_run"
 
     default_config = f"/home/lige/Codes/onur/wandb2numpy/example_configs/dmc_tasks.yaml"
 
