@@ -1,0 +1,18 @@
+# This is the minimal working config. Because not specified otherwise, all runs in the project
+# that include the field "test_acc" will be exported as a numpy array to the directory "wandb_data".
+
+experiment1:
+  fields: ["evaluation/return", "_step"]
+  entity: geli-bruce-ai
+
+  project: gym_v3
+
+  config:
+    env_name:
+      values: ["auto"]
+
+  groups: ["Use QSM default HPs, 10 seeds"]
+
+
+
+  output_path: auto

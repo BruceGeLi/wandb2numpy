@@ -1,0 +1,25 @@
+# This is the minimal working config. Because not specified otherwise, all runs in the project
+# that include the field "test_acc" will be exported as a numpy array to the directory "wandb_data".
+
+experiment1:
+  fields: ["evaluation/return", "evaluation/success", "_step"]
+  entity: geli-bruce-ai
+
+  project: myosuite
+
+  config:
+    env_name:
+      values: ["auto"]
+
+#    sampler.args.time_pairs_config.num_select:
+#      values: [2]
+##      values: [5]
+##      values: [10]
+##      values: [25]
+##      values: [50]
+#      values: [100]
+  groups: ["Myo, default HPs, 10 seeds"] # dog run
+
+
+
+  output_path: auto

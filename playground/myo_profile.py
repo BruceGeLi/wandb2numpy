@@ -27,7 +27,7 @@ def read_box_dense_world_data(data_path):
     for subdict in subdict_list:
         # subdict = subdict + "/experiment1"
         return_dir = subdict + "/evaluation"
-        is_success_path = return_dir + "/return.npy"
+        is_success_path = return_dir + "/success.npy"
         is_success = np.load(is_success_path)
         is_success_list.append(is_success)
 
@@ -83,13 +83,10 @@ def draw_box_pushing_iqm(is_success, simulation_steps, algorithm, case):
 
 
 if __name__ == "__main__":
-    # task = "humanoid_stand"
-    # task = "humanoid_walk"
-    # task = "humanoid_run"
-    # task = "dog_stand"
-    # task = "dog_walk"
-    # task = "dog_trot"
-    task = "dog_run"
+    # task = "myoHandObjHoldRandom-v0"
+    # task = "myoHandReachRandom-v0"
+    task = "myoHandKeyTurnRandom-v0"
+    # task = "myoHandPenTwirlRandom-v0"
 
     eva_return, simulation_steps = read_box_dense_world_data(f"/home/lige/Codes/onur/wandb2numpy/wandb_data/{task}")
 

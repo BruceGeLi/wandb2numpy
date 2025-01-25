@@ -83,13 +83,8 @@ def draw_box_pushing_iqm(is_success, simulation_steps, algorithm, case):
 
 
 if __name__ == "__main__":
-    # task = "humanoid_stand"
-    # task = "humanoid_walk"
-    # task = "humanoid_run"
-    # task = "dog_stand"
-    # task = "dog_walk"
-    # task = "dog_trot"
-    task = "dog_run"
+    # task = "Ant-v3"
+    task = "Humanoid-v3"
 
     eva_return, simulation_steps = read_box_dense_world_data(f"/home/lige/Codes/onur/wandb2numpy/wandb_data/{task}")
 
