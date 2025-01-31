@@ -57,6 +57,47 @@ def read_box_dense_world_data(data_path):
 
     return is_success_array, simulation_steps_array
 
+def read_box_dense_data(data_path, metric):
+
+    subdict_list = get_immediate_subdirectories(data_path)
+
+    is_success_list = []
+    global_steps_list = []
+
+    for subdict in subdict_list:
+        # subdict = subdict + "/experiment1"
+        if f"{metric}.npy" in os.listdir(subdict):
+            is_success_path = subdict + f"/{metric}.npy"
+            is_success = np.load(is_success_path)
+            is_success_list.append(is_success)
+        if "num_global_steps.npy" in os.listdir(subdict):
+            simulation_steps_path = subdict + "/num_global_steps.npy"
+            simulation_steps = np.load(simulation_steps_path)
+            global_steps_list.append(simulation_steps)
+
+    # b = np.zeros((4, 304))
+    # a = is_success_list[21]
+    # b[:3] = a
+    # b[-1] = a[0]
+    # is_success_list[21] = b
+
+    metric_data = np.array(is_success_list)
+
+
+    metric_data = np.swapaxes(metric_data, 0, 1)
+
+    # b = np.zeros((4, 304))
+    # a = global_steps_list[21]
+    # b[:3] = a
+    # b[-1] = a[0]
+    # global_steps_list[21] = b
+
+    simulation_steps_array = np.array(global_steps_list)
+    simulation_steps_array = np.swapaxes(simulation_steps_array, 0, 1)
+
+
+    return metric_data, simulation_steps_array
+
 
 def draw_box_pushing_iqm(is_success, simulation_steps, algorithm, method, case):
     fig, ax = plt.subplots(ncols=1, figsize=(7, 5))
@@ -84,10 +125,22 @@ def draw_box_pushing_iqm(is_success, simulation_steps, algorithm, method, case):
 if __name__ == "__main__":
     # method = "bbrl"
     method = "seq"
-    # case = "dense"
-    case = "sparse"
+    case = "dense"
+    # case = "sparse"
 
-    is_success, simulation_steps = read_box_dense_world_data(f"/home/lige/Codes/seq_rl/wandb2numpy/wandb_data/box_{case}_{method}")
+    # Other metrics other than success rate
+    # metric = "avg_values_mean"
+    metric = "mc_returns_mean"
+    # metric = "targets_bias_mean"
+    # metric = "values_bias_mean"
+
+    # success rate
+    # is_success, simulation_steps = read_box_dense_world_data(f"/home/lige/Codes/seq_rl/wandb2numpy/wandb_data/box_{case}_{method}")
+
+    # other metrics
+    is_success, simulation_steps = read_box_dense_data(
+        f"/home/lige/Codes/seq_rl/wandb2numpy/wandb_data/box_{case}_{method}", metric)
+
 
     # draw the iqm curve
     reshaped_is_success = np.reshape(is_success, (-1, is_success.shape[-1]))

@@ -2,7 +2,7 @@
 # that include the field "test_acc" will be exported as a numpy array to the directory "wandb_data".
 
 experiment1:
-  fields: ["evaluation_is_success_mean", "num_global_steps"]
+  fields: ["evaluation_is_success_mean", "num_global_steps", "avg_values_mean", "mc_returns_mean", "targets_bias_mean", "values_bias_mean"]
   entity: gelikit
 
   project: box_random_seq_entire
@@ -28,6 +28,8 @@ experiment1:
 #  groups: ["dense, ablation, no TRPL"] # fixme, no TRPL
 #  groups: ["dense, ablation, seq 1, 2, 5, 10"] # Number of segments
 #  groups: ["dense, ablation, tune num_segments, no beyond traj_length"] # Number of segments, no beyond traj_length
-  groups: ["ablation, no target net, dense"] # Number of segments, no beyond traj_length
+#  groups: ["ablation, no target net, dense"] # Number of segments, no beyond traj_length
+#  groups: ["dense, final, record avg values, iter 26000"] # record avg values, iter 26000
+  groups: ["dense, segment length 1, record avg values, iter 26000"] # record avg values, iter 26000
 
   output_path: /home/lige/Codes/seq_rl/wandb2numpy/wandb_data/box_dense_seq
